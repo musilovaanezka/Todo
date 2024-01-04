@@ -291,7 +291,7 @@ const TaskList = () => {
                                                     task["id"],
                                                     prompt("Enter task name", task["name"]),
                                                     prompt("Enter deadline", task["deadline"]),
-                                                    task["createdDate"]
+                                                    task["createdDate"].toDateString()
                                                 )
                                             }
                                         >
@@ -339,7 +339,7 @@ const TaskList = () => {
                                                     task["id"],
                                                     task["name"],
                                                     task["deadline"],
-                                                    task["createdDate"]
+                                                    task["createdDate"].toDateString()
                                                 )
                                             }
                                         >
