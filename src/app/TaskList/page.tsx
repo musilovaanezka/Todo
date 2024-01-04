@@ -6,8 +6,16 @@ import { redirect } from 'next/navigation';
 import Link from "next/link";
 
 const TaskList = () => {
-    const [tasks, setTasks] = useState([]);
-    const [checkedTasks, setCheckedTasks] = useState([]);
+    interface Task {
+        id: number;
+        userId: string;
+        name: string;
+        createdDate: Date;
+        deadline: string | null;
+        checked: boolean;
+    }
+    const [tasks, setTasks] = useState<Task[]>([]);
+    const [checkedTasks, setCheckedTasks] = useState<Task[]>([]);
     const [newTaskName, setNewTaskName] = useState("");
     const [newTaskDeadline, setNewTaskDeadline] = useState("");
     const [error, setError] = useState("");
@@ -96,7 +104,7 @@ const TaskList = () => {
         }
     };
 
-    const handleEdit = async (taskId: number, newName: string, newDeadline: string, createdDate: string) => {
+    const handleEdit = async (taskId: number, newName: string, newDeadline: string | null, createdDate: string) => {
         const cookie = await getToken();
         try {
             const newItem = {
@@ -157,8 +165,12 @@ const TaskList = () => {
 
             if (response.ok) {
                 const checkedTask = tasks.find((task) => task["id"] === taskId);
-                setCheckedTasks([...checkedTasks, checkedTask]);
-                setTasks(tasks.filter((task) => task["id"] !== taskId));
+                if (checkedTask) {
+                    setCheckedTasks([...checkedTasks, checkedTask]);
+                    setTasks(tasks.filter((task) => task["id"] !== taskId));
+                } else {
+                    setError("Task not found");
+                }
             } else {
                 setError("Cannot check task");
             }
@@ -189,8 +201,12 @@ const TaskList = () => {
 
             if (response.ok) {
                 const uncheckedTask = checkedTasks.find((task) => task["id"] === taskId);
-                setTasks([...tasks, uncheckedTask]);
-                setCheckedTasks(checkedTasks.filter((task) => task["id"] !== taskId));
+                if (uncheckedTask) {
+                    setTasks([...tasks, uncheckedTask]);
+                    setCheckedTasks(checkedTasks.filter((task) => task["id"] !== taskId));
+                } else {
+                    setError("Task not found");    
+                }
             } else {
                 setError("Cannot uncheck task");
             }
