@@ -1,6 +1,10 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css"
+import Nav from '../components/Nav';
+import { cookies } from 'next/headers';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -14,9 +18,14 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const token = cookies().get('token');
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className="min-h-screen">
+        <div className='flex justify-center items-center p-24'>
+          {children}
+        </div>
+      </body>
     </html>
   )
 }
