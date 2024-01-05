@@ -3,6 +3,7 @@
 import { Login } from "@/components/loginCookies";
 import { useRouter } from "next/navigation";
 import React, {useState} from "react";
+import API_URL from "../../../config";
 
 const LoginPage = () =>  {
     const [username, setLogin] = useState("");
@@ -14,7 +15,7 @@ const LoginPage = () =>  {
         event.preventDefault();
 
         try {
-            const response = await fetch('https://192.168.100.13:7270/api/users/login?'
+            const response = await fetch(API_URL + '/users/login?'
                 + new URLSearchParams({
                     login: username, password: password
                 }));

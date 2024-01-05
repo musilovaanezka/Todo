@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import { getToken } from "@/components/loginCookies";
 import API_URL from "../../../config";
-import { redirect } from 'next/navigation';
 import Link from "next/link";
 
 const TaskList = () => {
@@ -219,10 +218,6 @@ const TaskList = () => {
     const handleAlertClose = () => {
         setError("");
       };
-
-    const handleShowJson = () => {
-        redirect("/Json");
-    }
 
 
     return (
